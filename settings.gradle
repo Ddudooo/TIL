@@ -1,0 +1,5 @@
+rootProject.name = 'TIL'
+
+include 'JAVA'
+include 'JAVA:concurrent'
+include 'JAVA:concurrent:sample'
