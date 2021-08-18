@@ -10,7 +10,7 @@
 
 ## 프록시 서버
 
-![proxy.png](./images/proxy.png)
+![proxy.png](images/proxy.png)
 
 클라이언트와 서버 사이에 위치하며,
 
