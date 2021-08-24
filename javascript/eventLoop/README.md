@@ -81,7 +81,7 @@
 
 ## 이벤트 루프
 
-![event_loop.gif](images/event_loop.gif)
+![event_loop.png](images/event_loop.png)
 
 이벤트 루프에 대해 좀 더 알아보자
 
