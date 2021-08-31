@@ -1,0 +1,12 @@
+{
+  "name": "microtaskqueue",
+  "type" : "module",
+  "version": "0.0.1",
+  "description": "마이크로테스크 큐 예시",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
