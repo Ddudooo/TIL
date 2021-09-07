@@ -216,3 +216,104 @@ let myStr: string = myArray[0];
 
 이 이유는 `number`로 인덱싱 할 때, 자바스크립트는 실제로 객체를 인덱싱하기 전에 `string`으로 변환하기 때문.  
 즉, 100 (`number`)로 인덱싱하는 것은 "100" (`string`)로 인덱싱하는 것과 같기 때문에, 서로 일관성 있어야 한다.
+
+## 클래스에서 인터페이스 구현
+
+```typescript
+interface Flyable{
+    fly(): void;
+}
+
+class Duck implements Flyable {
+    private name:string;
+    constructor(name: string) {
+        this.name = name;
+    }
+    fly(){
+        console.log(`${this.name} flying!`);
+    }
+}
+```
+
+인터페이스는 `public`한 영역을 기술하기에 `private`에 대해서는 검사할 수 없다.
+
+### 클래스 스태틱과 인스턴스 차이
+
+클래스는 두 가지 타입을 가진다는 것을 기억하는 게 좋다  
+`스태틱 타입`과 `인스턴스 타입`.
+
+생성 시그니처 (`construct signature`)로 인터페이스를 생성하고,  
+클래스를 생성하려고 한다면, 
+
+인터페이스를 `implements` 할 때, 에러가 발생하는 것을 확인할 수 있다.
+
+클래스가 인터페이스를 `implements` 할 때, 클래스의 인스턴스만 검사하기 때문.
+
+생성자가 스태틱이기에 이 검사에 포함되지 않는다.
+
+## 인터페이스 상속 (`Extending Interfaces`)
+
+인터페이스도 클래스처럼 상속이 가능하다.
+
+이를 통해 인터페이스의 멤버를 다른 인터페이스에 복사하는 것을 가능하게 해주며
+
+인터페이스를 재사용 높은 콤포넌트를 쪼개, 애플리케이션의 유연함을 제공해준다.
+
+```typescript
+interface Shape {
+    color: string;
+}
+
+interface PenStroke {
+    penWidth: number;
+}
+
+interface Square extends Shape, PenStroke {
+    sideLength: number;
+}
+
+let square = {} as Square;
+square.color = "blue";
+square.sideLength = 10;
+square.penWidth = 5.0;
+```
+
+## 하이브리드 타입 (`Hybrid Types`)
+
+인터페이스는 실제 자바스크립트에 존재하는 다양한 타입들을 기술할 수 있다. 
+
+자바스크립트의 동적이고 유연한 특성 때문에,  
+몇몇 타입의 조합으로 동작하는 객체를 가끔 마주할 수 있다.
+
+```typescript
+interface Counter {
+    (start: number): string;
+    interval: number;
+    reset(): void;
+}
+
+function getCounter(): Counter {
+    let counter = (function (start: number) { }) as Counter;
+    counter.interval = 123;
+    counter.reset = function () { };
+    return counter;
+}
+
+let c = getCounter();
+c(10);
+c.reset();
+c.interval = 5.0;
+```
+
+## 클래스를 상속하는 인터페이스 (`Interface Extending Classes`)
+
+인터페이스 타입이 클래스 타입을 확장하면,  
+클래스의 멤버는 상속받지만 구현은 상속받지 않는다. 
+
+이것은 인터페이스가 구현을 제공하지 않고, 클래스의 멤버 모두를 선언한 것과 마찬가지. 
+
+인터페이스는 심지어 기초 클래스의 `private`과 `protected` 멤버도 상속받는다. 
+
+이것은 인터페이스가 `private` 혹은 `protected` 멤버를 포함한 클래스를 확장할 수 있다는 뜻이고, 인터페이스 타입은 그 클래스나 하위클래스에 의해서만 구현될 수 있다.
+
+거대한 상속계층을 가지고 있을 때 유용하며, 특정 프로퍼티를 가진 하위클래스에서만 코드가 동작하도록 지정하는데도 유용하다.
